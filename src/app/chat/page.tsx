@@ -136,7 +136,6 @@ export default function Chat() {
       <div className="w-3/4">
         <hr></hr>
       </div>
-      <div className="mb-2 w-full flex items-center justify-center">
         <ModelParams
           show={cParams.show}
           maxOutputTokens={cParams.maxOutputTokens}
@@ -147,7 +146,6 @@ export default function Chat() {
           handleTopK={handleTopKChange}
           handleTopP={handleTopPChange}
         />
-      </div>
       <ModelInput
         input={input}
         setInput={setInput}
