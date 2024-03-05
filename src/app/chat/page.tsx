@@ -1,10 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import ModelInput from "../components/model_input";
 import ChatHistory from "../components/chat_history";
 import ModelParams from "../components/model_params";
+import ChatEmpty from "../components/chat_empty";
+import { useRouter } from "next/navigation";
 
 export default function Chat() {
+  const router = useRouter();
   // state for chat
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
@@ -60,18 +63,24 @@ export default function Chat() {
     });
   };
 
-  const onSubmit = async () => {
-    if (input === "" || input.length === 0) return;
-    console.log("submitted: %s", input);
+  const onSubmit = async (suggestion?: string) => {
+    let reqInput = input;
 
-    setHistory([...history, { role: "user", parts: input }]);
-
-    setInput("");
-    setResponse("");
-    setLoading(true);
+    if (suggestion !== null && suggestion !== undefined) {
+      setHistory([...history, { role: "user", parts: suggestion }]);
+      setResponse("");
+      setLoading(true);
+      reqInput = suggestion;
+    } else {
+      if (input === "" || input.length === 0) return;
+      setHistory([...history, { role: "user", parts: input }]);
+      setResponse("");
+      setInput("");
+      setLoading(true);
+      reqInput = input;
+    }
 
     const { show, ...modelParams } = cParams;
-
     // create a post request to the /api/chat endpoint
     const response = await fetch("api/chat", {
       method: "POST",
@@ -79,7 +88,7 @@ export default function Chat() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        msg: input,
+        msg: reqInput,
         history: history,
         params: modelParams,
       }),
@@ -87,10 +96,10 @@ export default function Chat() {
 
     // get the response from the server
     const data: { text: string; history: { role: string; parts: [] }[] } =
-    await response.json();
+      await response.json();
     const chatHistory = data.history;
-    
-    let newHistory: { role: string; parts: string } = {role: "", parts: ""};
+
+    let newHistory: { role: string; parts: string } = { role: "", parts: "" };
     chatHistory.map((histo: any) => {
       const newRole = histo.role;
       const newPartsArr = histo.parts;
@@ -100,11 +109,10 @@ export default function Chat() {
       });
 
       newHistory = { role: newRole, parts: newParts };
-
     });
 
     setHistory((prev) => [...prev, newHistory]);
-    console.log(JSON.stringify(history));
+    console.log(JSON.stringify(chatHistory));
 
     setLoading(false);
   };
@@ -119,23 +127,30 @@ export default function Chat() {
         setOutput((prev) => prev + response[i]);
       }, i * 10);
     }
-
-    console.log("Response: %s", response);
   }, [response]);
 
   return (
     <div className="h-full w-full pb-5 pt-2 flex flex-col items-center align-bottom">
-      <ChatHistory history={history} loading={loading} />
-      <ModelParams
-        show={cParams.show}
-        maxOutputTokens={cParams.maxOutputTokens}
-        temp={cParams.temperature}
-        topK={cParams.topK}
-        topP={cParams.topP}
-        handleTemp={handleTempChange}
-        handleTopK={handleTopKChange}
-        handleTopP={handleTopPChange}
-      />
+      {history.length > 0 ? (
+        <ChatHistory history={history} loading={loading} />
+      ) : (
+        <ChatEmpty onClick={onSubmit} />
+      )}
+      <div className="w-3/4">
+        <hr></hr>
+      </div>
+      <div className="mb-2">
+        <ModelParams
+          show={cParams.show}
+          maxOutputTokens={cParams.maxOutputTokens}
+          temp={cParams.temperature}
+          topK={cParams.topK}
+          topP={cParams.topP}
+          handleTemp={handleTempChange}
+          handleTopK={handleTopKChange}
+          handleTopP={handleTopPChange}
+        />
+      </div>
       <ModelInput
         input={input}
         setInput={setInput}

@@ -28,7 +28,6 @@ export default function Home() {
 
   const onSubmit = async () => {
     if (input === "" || input.length === 0) return;
-    console.log("submitted: %s", input);
 
     setResponse("");
     setLoading(true);
@@ -62,8 +61,6 @@ export default function Home() {
         setOutput((prev) => prev + response[i]);
       }, i * 10);
     }
-
-    console.log("Response: %s", input, response);
   }, [response]);
 
   const handleTempChange = async (
