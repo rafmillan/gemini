@@ -10,12 +10,7 @@ export default function Chat() {
   const [response, setResponse] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState([
-    {
-      role: "model",
-      parts: "Hello World!",
-    },
-  ]);
+  const [history, setHistory] = useState<{ role: string; parts: string }[]>([]);
   const [cParams, setCParams] = useState({
     show: false,
     maxOutputTokens: 1024,
@@ -69,12 +64,9 @@ export default function Chat() {
     if (input === "" || input.length === 0) return;
     console.log("submitted: %s", input);
 
-    setHistory([
-      ...history,
-      {role: "user", parts: input}
-    ])
+    setHistory([...history, { role: "user", parts: input }]);
 
-    setInput("")
+    setInput("");
     setResponse("");
     setLoading(true);
 
@@ -94,26 +86,25 @@ export default function Chat() {
     });
 
     // get the response from the server
-    const data: {text: string, history: {role: string, parts: []}[]} = await response.json();
+    const data: { text: string; history: { role: string; parts: [] }[] } =
+    await response.json();
     const chatHistory = data.history;
-    let newHistory: {role:string, parts: string}[] = []
-    chatHistory.map((histo:any) => {
-      const newRole = histo.role
-      const newPartsArr = histo.parts
-      let newParts = ""
+    
+    let newHistory: { role: string; parts: string } = {role: "", parts: ""};
+    chatHistory.map((histo: any) => {
+      const newRole = histo.role;
+      const newPartsArr = histo.parts;
+      let newParts = "";
       newPartsArr.map((part: any) => {
-        newParts += part.text
-      })
+        newParts += part.text;
+      });
 
-      newHistory = [
-        ...newHistory,
-        {role: newRole, parts: newParts}
-      ]
+      newHistory = { role: newRole, parts: newParts };
 
-    })
+    });
 
-    setHistory(newHistory)
-    console.log(JSON.stringify(history))
+    setHistory((prev) => [...prev, newHistory]);
+    console.log(JSON.stringify(history));
 
     setLoading(false);
   };
@@ -134,7 +125,7 @@ export default function Chat() {
 
   return (
     <div className="h-full w-full pb-5 pt-2 flex flex-col items-center align-bottom">
-      <ChatHistory history={history} loading={loading}/>
+      <ChatHistory history={history} loading={loading} />
       <ModelParams
         show={cParams.show}
         maxOutputTokens={cParams.maxOutputTokens}

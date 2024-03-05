@@ -1,6 +1,10 @@
+import { marked } from "marked";
+import Marked from "./marked";
+
 interface ChatMsgParams {
   role: string;
   msg: string;
+  last?: boolean
 }
 
 export default function ChatMsg(params: ChatMsgParams) {
@@ -11,7 +15,9 @@ export default function ChatMsg(params: ChatMsgParams) {
       className={`flex flex-col px-4 py-2 rounded-xl ${bgColor} mb-2 drop-shadow-sm`}
     >
       <div className="text-sm font-medium">{params.role}</div>
-      <div>{params.msg}</div>
+      <div>
+        {Marked(marked.parse(params.msg) as string)}
+      </div>
     </div>
   );
 }
