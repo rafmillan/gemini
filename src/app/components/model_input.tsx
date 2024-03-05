@@ -18,7 +18,7 @@ export default function ModelInput(params: ModelInputParams) {
     <React.Fragment>
       <div className="w-full flex items-center justify-center mt-2">
         <textarea
-          className="w-2/3 border border-gray-400 rounded-lg px-2 py-1 mr-1 bg-gray-200 drop-shadow-md max-h-[144px] min-h-[36px]"
+          className="align-middle w-2/3 border border-gray-400 rounded-lg px-2 py-1 mr-1 bg-gray-200 drop-shadow-md max-h-[136px] min-h-[34px]"
           value={params.input}
           placeholder={placeholder}
           onChange={(e) => {

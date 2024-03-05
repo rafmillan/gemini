@@ -14,7 +14,7 @@ export default function ChatMsg(params: ChatMsgParams) {
     <div
       className={`flex flex-col px-4 py-2 rounded-xl ${bgColor} mb-2 drop-shadow-sm`}
     >
-      <div className="text-sm font-medium">{params.role}</div>
+      <div className="text-sm font-medium mb-1">{params.role}</div>
       <div>
         {Marked(marked.parse(params.msg) as string)}
       </div>

@@ -4,10 +4,8 @@ import ModelInput from "../components/model_input";
 import ChatHistory from "../components/chat_history";
 import ModelParams from "../components/model_params";
 import ChatEmpty from "../components/chat_empty";
-import { useRouter } from "next/navigation";
 
 export default function Chat() {
-  const router = useRouter();
   // state for chat
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
@@ -68,19 +66,18 @@ export default function Chat() {
 
     if (suggestion !== null && suggestion !== undefined) {
       setHistory([...history, { role: "user", parts: suggestion }]);
-      setResponse("");
-      setLoading(true);
       reqInput = suggestion;
     } else {
       if (input === "" || input.length === 0) return;
       setHistory([...history, { role: "user", parts: input }]);
-      setResponse("");
       setInput("");
-      setLoading(true);
       reqInput = input;
     }
 
+    setResponse("");
+    setLoading(true);
     const { show, ...modelParams } = cParams;
+    
     // create a post request to the /api/chat endpoint
     const response = await fetch("api/chat", {
       method: "POST",
@@ -139,7 +136,7 @@ export default function Chat() {
       <div className="w-3/4">
         <hr></hr>
       </div>
-      <div className="mb-2">
+      <div className="mb-2 w-full flex items-center justify-center">
         <ModelParams
           show={cParams.show}
           maxOutputTokens={cParams.maxOutputTokens}
