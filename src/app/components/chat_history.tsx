@@ -17,7 +17,7 @@ export default function ChatHistory(params: ChatHistoParams) {
   }, [params.history]);
 
   return (
-    <div className="h-full w-3/4 grow py-2 px-5 overflow-scroll -mt-2 iphone:w-[90%]">
+    <div className="h-full dt:w-3/4 grow py-2 px-5 overflow-scroll -mt-2 w-[90%]">
       {params.history.map((h: { role: string; parts: string }, idx: number) => {
         const last = idx == params.history.length-1;
         return(
