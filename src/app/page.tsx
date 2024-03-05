@@ -1,10 +1,8 @@
 "use client";
-import Marked from "./components/ui/marked";
-import LoadingText from "./components/ui/loading_text_skeleton";
 import { useEffect, useState } from "react";
-import { marked } from "marked";
-import { IconContext } from "react-icons";
-import { LuSendHorizonal, LuSettings2 } from "react-icons/lu";
+import ModelParams from "./components/model_params";
+import ModelOutput from "./components/model_output";
+import ModelInput from "./components/model_input";
 
 export default function Home() {
   // state for the prompt, response and output
@@ -12,7 +10,7 @@ export default function Home() {
   const [response, setResponse] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [mParams, SetMParams] = useState({
+  const [mParams, setMParams] = useState({
     show: false,
     maxOutputTokens: 1024,
     temp: 0.5, // between 0 and 1
@@ -22,7 +20,7 @@ export default function Home() {
 
   const toggleModelParams = async () => {
     const curr = mParams;
-    SetMParams({
+    setMParams({
       ...curr,
       show: !curr.show,
     });
@@ -36,7 +34,7 @@ export default function Home() {
     setLoading(true);
 
     // create a post request to the /api/chat endpoint
-    const response = await fetch("api/chat", {
+    const response = await fetch("api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +71,7 @@ export default function Home() {
   ) => {
     const newT = parseFloat(event.target.value);
     const oldParams = mParams;
-    SetMParams({
+    setMParams({
       ...oldParams,
       temp: newT,
     });
@@ -84,7 +82,7 @@ export default function Home() {
   ) => {
     const newTopP = parseFloat(event.target.value);
     const oldParams = mParams;
-    SetMParams({
+    setMParams({
       ...oldParams,
       topP: newTopP,
     });
@@ -95,133 +93,35 @@ export default function Home() {
   ) => {
     const newTopK = parseFloat(event.target.value);
     const oldParams = mParams;
-    SetMParams({
+    setMParams({
       ...oldParams,
       topK: newTopK,
     });
   };
 
   return (
-    <main className="w-screen h-screen bg-gray-100 overflow-hidden">
       <div className="w-full h-full flex flex-col">
         <div className="w-full flex flex-col-reverse basis-1/3 flex-shrink-0">
-          <div className="flex items-center justify-center">
-            <input
-              className="border border-gray-400 rounded-lg px-2 py-1 mr-1 bg-gray-200"
-              type="text"
-              value={input}
-              placeholder="enter prompt..."
-              onChange={(e) => {
-                setInput(e.target.value);
-              }}
-              size={64}
-            />
-            <button
-              className="bg-gray-600 text-gray-100 py-1 px-1 mr-1 rounded-lg border border-gray-700"
-              onClick={() => onSubmit()}
-            >
-              <IconContext.Provider value={{ className: "text-gray-100" }}>
-                <div>
-                  <LuSendHorizonal size={24} />
-                </div>
-              </IconContext.Provider>
-            </button>
-            <button
-              className="bg-gray-600 py-1 px-1 rounded-lg border border-gray-700"
-              onClick={() => toggleModelParams()}
-            >
-              <IconContext.Provider value={{ className: "text-gray-100" }}>
-                <div>
-                  <LuSettings2 size={24} />
-                </div>
-              </IconContext.Provider>
-            </button>
-          </div>
-          <h1 className="text-5xl mb-2 tracking-wide text-center">chat</h1>
+          <ModelInput
+            input={input}
+            setInput={setInput}
+            onSubmit={onSubmit}
+            toggleParams={toggleModelParams}
+          />
+          <h1 className="text-5xl tracking-wide text-center">text generation</h1>
         </div>
-        {mParams.show ? (
-          <div className="justify-center items-center flex flex-col w-full mt-2">
-            <p className="text-gray-500 tracking-wide font-semibold">
-              model parameters
-            </p>
-            <div className="flex">
-              <div className="flex flex-col items-center justify-center text-center">
-                <label
-                  className="text-gray-500 tracking-wide text-center"
-                  htmlFor="rangeSlider0"
-                >
-                  temperature: {mParams.temp}
-                </label>
-                <input
-                  className="ml-5 align-middle"
-                  type="range"
-                  id="rangeSlider0"
-                  name="temperature"
-                  min={0}
-                  max={1}
-                  step={0.1}
-                  value={mParams.temp}
-                  onChange={handleTempChange}
-                />
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <label
-                  className="text-gray-500 tracking-wide text-center"
-                  htmlFor="rangeSlider1"
-                >
-                  topK: {mParams.topK}
-                </label>
-                <input
-                  className="ml-5 align-middle"
-                  type="range"
-                  id="rangeSlider1"
-                  name="topK"
-                  min={0}
-                  max={100}
-                  step={5}
-                  value={mParams.topK}
-                  onChange={handleTopKChange}
-                />
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <label
-                  className="text-gray-500 tracking-wide text-center"
-                  htmlFor="rangeSlider2"
-                >
-                  topP: {mParams.topP}
-                </label>
-                <input
-                  className="ml-5 align-middle"
-                  type="range"
-                  id="rangeSlider2"
-                  name="topP"
-                  min={0}
-                  max={1}
-                  step={0.1}
-                  value={mParams.topP}
-                  onChange={handleTopPChange}
-                />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
+        <ModelParams
+          show={mParams.show}
+          maxOutputTokens={mParams.maxOutputTokens}
+          temp={mParams.temp}
+          topK={mParams.topK}
+          topP={mParams.topP}
+          handleTemp={handleTempChange}
+          handleTopK={handleTopKChange}
+          handleTopP={handleTopPChange}
+        />
         <hr className="bg-gray-300 border-0 h-px mt-5 mx-40" />
-        <div className="flex basis-2/3 justify-center overflow-scroll pb-5 pt-5">
-          {response === "" && !loading ? (
-            <></>
-          ) : (
-            <div className="h-fit align-center justify-center border border-gray-400 rounded-xl w-2/3 px-2 py-1 bg-gray-200 whitespace-normal">
-              {loading ? (
-                <LoadingText />
-              ) : (
-                Marked(marked.parse(output) as string)
-              )}
-            </div>
-          )}
-        </div>
+        <ModelOutput loading={loading} response={response} output={output} />
       </div>
-    </main>
   );
 }
