@@ -97,17 +97,18 @@ export default function Home() {
   };
 
   return (
-      <div className="w-full h-full flex flex-col">
-        <div className="w-full flex flex-col-reverse basis-1/3 flex-shrink-0">
-          <ModelInput
-            input={input}
-            setInput={setInput}
-            onSubmit={onSubmit}
-            toggleParams={toggleModelParams}
-          />
-          <h1 className="text-5xl tracking-wide text-center">text generation</h1>
-        </div>
-        <div className="w-full flexitems-center justify-center">
+    <div className="w-full h-full flex flex-col">
+      <div className="w-full flex flex-col-reverse basis-1/3 flex-shrink-0">
+        <ModelInput
+          input={input}
+          setInput={setInput}
+          onSubmit={onSubmit}
+          toggleParams={toggleModelParams}
+          rows={3}
+        />
+        <h1 className="text-5xl tracking-wide text-center">text generation</h1>
+      </div>
+      <div className="w-full flexitems-center justify-center">
         <ModelParams
           show={mParams.show}
           maxOutputTokens={mParams.maxOutputTokens}
@@ -118,9 +119,9 @@ export default function Home() {
           handleTopK={handleTopKChange}
           handleTopP={handleTopPChange}
         />
-        </div>
-        <hr className="bg-gray-300 border-0 h-px mt-5 mx-40" />
-        <ModelOutput loading={loading} response={response} output={output} />
       </div>
+      <hr className="bg-gray-300 border-0 h-px mt-5 mx-40" />
+      <ModelOutput loading={loading} response={response} output={output} />
+    </div>
   );
 }

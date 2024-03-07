@@ -134,8 +134,9 @@ export default function Chat() {
         <ChatEmpty onClick={onSubmit} />
       )}
       <div className="w-3/4">
-        <hr></hr>
+        <hr/>
       </div>
+      <div className="mb-2 w-full flex">
         <ModelParams
           show={cParams.show}
           maxOutputTokens={cParams.maxOutputTokens}
@@ -146,6 +147,7 @@ export default function Chat() {
           handleTopK={handleTopKChange}
           handleTopP={handleTopPChange}
         />
+      </div>
       <ModelInput
         input={input}
         setInput={setInput}
