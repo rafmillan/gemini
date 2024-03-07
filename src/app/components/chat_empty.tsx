@@ -31,7 +31,7 @@ export default function ChatEmpty(params: ChatEmptyParams) {
                 key={index}
                 onClick={() => params.onClick(str)}
                 value={str}
-                className="text-md border border-gray-300 rounded-lg bg-gray-200 text-left text-gray-800 px-5"
+                className="text-md border border-gray-300 rounded-lg bg-gray-200 text-left text-gray-800 px-5 py-3"
               >
                 {str}
               </button>
