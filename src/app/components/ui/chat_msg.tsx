@@ -1,10 +1,9 @@
 import { marked } from "marked";
 import Marked from "./marked";
 
-interface ChatMsgParams {
+export interface ChatMsgParams {
   role: string;
   msg: string;
-  last?: boolean
 }
 
 export default function ChatMsg(params: ChatMsgParams) {

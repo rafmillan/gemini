@@ -43,6 +43,7 @@ export default function Doc() {
       ...queryHistory,
       {role: "user", parts: inputQuery},
     ])
+    setInputQuery("");
     setLoading(true)
 
     //create a post request to the /api/chat endpoint
@@ -56,8 +57,6 @@ export default function Doc() {
         ...mParams,
       }),
     });
-
-    setInputQuery("");
 
     // get the response from the server
     const data = await response.json();
@@ -159,7 +158,7 @@ export default function Doc() {
           ) : (
             <></>
           )}
-          <div className="grow overflow-x-clip flex items-start py-2 border border-gray-400 bg-white rounded-lg overflow-y-scroll">
+          <div className="grow overflow-x-clip flex items-start justify-center py-2 border border-gray-400 bg-white rounded-lg overflow-y-scroll">
             <ChatHistory history={queryHistory} loading={loading}/>
           </div>
           <p className="mb-2 tracking-wide">Query the document below</p>
