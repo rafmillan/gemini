@@ -26,7 +26,7 @@ export default function Slider(params: SliderParams) {
           {params.name}: {params.value}
         </label>
         <input
-          className="ml-5 align-middle appearance-none dt:mt-0 mt-2
+          className="ml-5 align-middle appearance-none dt:mt-0 mt-2 bg-gray-100
                   [&::-webkit-slider-thumb]:dt:w-3
                   [&::-webkit-slider-thumb]:dt:h-3
                   [&::-webkit-slider-thumb]:dt:-mt-1
@@ -34,7 +34,7 @@ export default function Slider(params: SliderParams) {
                   [&::-webkit-slider-thumb]:h-4
                   [&::-webkit-slider-thumb]:-mt-1.5
                   [&::-webkit-slider-thumb]:appearance-none
-                  [&::-webkit-slider-thumb]:bg-gray-100
+                  [&::-webkit-slider-thumb]:bg-gray-700
                   [&::-webkit-slider-thumb]:rounded-full
                   [&::-webkit-slider-thumb]:transition-all
                   [&::-webkit-slider-thumb]:duration-150
@@ -46,7 +46,7 @@ export default function Slider(params: SliderParams) {
                   [&::-moz-range-thumb]:w-3
                   [&::-moz-range-thumb]:h-3
                   [&::-moz-range-thumb]:appearance-none
-                  [&::-moz-range-thumb]:bg-gray-100
+                  [&::-moz-range-thumb]:bg-gray-700
                   [&::-moz-range-thumb]:border-0
                   [&::-moz-range-thumb]:border-gray-700
                   [&::-moz-range-thumb]:rounded-full
@@ -56,7 +56,7 @@ export default function Slider(params: SliderParams) {
                   
                   [&::-webkit-slider-runnable-track]:w-full
                   [&::-webkit-slider-runnable-track]:h-1
-                  [&::-webkit-slider-runnable-track]:bg-gray-100
+                  [&::-webkit-slider-runnable-track]:bg-gray-500
                   [&::-webkit-slider-runnable-track]:rounded-full
                   [&::-webkit-slider-runnable-track]:dark:bg-gray-500
                   
