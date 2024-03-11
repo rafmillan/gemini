@@ -118,7 +118,7 @@ export default function Doc() {
 
   return (
     <div className="h-full w-full flex flex-col dt:flex-row items-center justify-center">
-      <div className="w-full h-full min-w-1/3 basis-1/3 dt:basis-1/2 max-w-1/2 overflow-scroll flex flex-col px-4 py-2">
+      <div className="w-full dt:min-w-1/2 dt:max-w-1/2 dt:h-full dt:basis-1/2 h-1/3 min-h-1/3 max-h-1/3 basis-1/3 flex flex-col px-4 py-2">
         <p className="mb-2 px-1 tracking-wide">Paste your document below</p>
         <textarea
           className="w-full grow resize-none p-2 border border-gray-400 rounded-lg"
@@ -131,7 +131,7 @@ export default function Doc() {
         />
         {/* <hr className="bg-gray-400 h-px mt-5 mx-5"/> */}
       </div>
-      <div className="w-full h-full grow-0 max-h-2/3 basis-2/3 dt:basis-1/2 max-w-1/2 flex px-4 py-2 overflow-clip">
+      <div className="w-full grow-0 h-full max-h-2/3 basis-2/3 dt:basis-1/2 max-w-1/2 flex px-4 py-2 overflow-clip">
         <div className="w-full flex flex-col-reverse">
           <ModelInput
             input={inputQuery}
@@ -158,7 +158,7 @@ export default function Doc() {
           ) : (
             <></>
           )}
-          <div className="grow overflow-x-clip flex items-start justify-center py-2 border border-gray-400 bg-white rounded-lg overflow-y-scroll">
+          <div className="grow overflow-x-clip flex items-start justify-center border border-gray-400 bg-white rounded-lg overflow-y-scroll">
             <ChatHistory history={queryHistory} loading={loading}/>
           </div>
           <p className="mb-2 tracking-wide">Query the document below</p>
