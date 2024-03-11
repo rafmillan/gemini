@@ -21,11 +21,11 @@ export default function ModelParams(params: ModelParamsParams) {
   return (
     <React.Fragment>
       {params.show ? (
-        <div className="justify-center items-center flex flex-col dt:w-full mt-2 w-[90%]">
+        <div className="justify-center items-center flex flex-col dt:w-full mt-2">
           <p className="text-gray-500 tracking-wide font-semibold dt:text-md text-xl">
             model parameters
           </p>
-          <div className="flex dt:flex-row flex-col">
+          <div className="flex flex-wrap dt:flex-row flex-col items-center justify-center align-middle">
             <Slider
               name="temperature"
               min={0}

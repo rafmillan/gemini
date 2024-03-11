@@ -128,14 +128,14 @@ export default function Chat() {
 
   return (
     <div className="h-full w-full pb-5 pt-2 flex flex-col items-center align-bottom">
-      <div className="flex h-full w-3/4 grow-0 overflow-y-scroll items-start justify-center -mt-2 pt-2">
+      <div className="flex h-full w-3/4 grow-0 overflow-y-scroll items-start justify-center -mt-2">
       {history.length > 0 ? (
         <ChatHistory history={history} loading={loading} />
       ) : (
         <ChatEmpty onClick={onSubmit} />
       )}
       </div>
-      <div className="w-3/4 -mt-2">
+      <div className="w-3/4">
         <hr/>
       </div>
       <div className="mb-2 w-full flex">
