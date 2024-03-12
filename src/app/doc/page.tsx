@@ -158,7 +158,7 @@ export default function Doc() {
           ) : (
             <></>
           )}
-          <div className="grow overflow-x-clip flex items-start justify-center border border-gray-400 bg-white rounded-lg overflow-y-scroll">
+          <div className="grow overflow-hidden flex items-start justify-center border border-gray-400 bg-white rounded-lg">
             <ChatHistory history={queryHistory} loading={loading}/>
           </div>
           <p className="mb-2 tracking-wide">Query the document below</p>

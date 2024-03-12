@@ -17,7 +17,7 @@ export default function ChatEmpty(params: ChatEmptyParams) {
   }, []);
 
   return (
-    <div className="dt:w-3/4 h-full grow flex overflow-scroll flex-col justify-end items-center p-2 w-[90%]">
+    <div className="dt:w-3/4 h-full grow flex overflow-hidden flex-col justify-end items-center p-2 w-[90%]">
       <h1 className="align-middle basis-1/5 dt:text-5xl dt:font-normal tracking-wide text-3xl font-medium">
         How can I help?
       </h1>
