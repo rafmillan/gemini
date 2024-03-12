@@ -88,3 +88,18 @@ export default function generateQuery(query: string, context: string) {
 
   return prompt
 }
+
+// Prints chunks of generated text to the console as they become available
+// eg: const result = await model.generateContentStream([prompt, ...imageParts]);
+//     await streamToStdout(result.stream);
+export async function streamToStdout(stream: any) {
+  console.log("Streaming...\n");
+  for await (const chunk of stream) {
+    // Get first candidate's current text chunk
+    const chunkText = chunk.text();
+    // Print to console without adding line breaks
+    process.stdout.write(chunkText);
+  }
+  // Print blank line
+  console.log("\n");
+}

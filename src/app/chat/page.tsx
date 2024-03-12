@@ -127,8 +127,10 @@ export default function Chat() {
   }, [response]);
 
   return (
-    <div className="h-full w-full pb-5 pt-2 flex flex-col items-center align-bottom">
-      <div className="flex h-full w-3/4 grow-0 overflow-y-scroll items-start justify-center -mt-2">
+    <div className="h-full w-full pb-5 pt-2 flex flex-col items-center align-bottom overflow-hidden">
+      <div className="flex h-full w-3/4 grow-0 overflow-y-hidden items-start justify-center -mt-2
+      [&::-webkit-scrollbar]:bg-gray-100 [&::-webkit-scrollbar]:dark:bg-gray-100
+      ">
       {history.length > 0 ? (
         <ChatHistory history={history} loading={loading} />
       ) : (
